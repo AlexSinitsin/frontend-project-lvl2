@@ -28,6 +28,3 @@ jobs:
       # Runs a single command using the runners shell
       - name: Lint code base
         run: make lint
-
-      - name: Test code base
-        run: node --experimental-vm-modules node_modules/.bin/jest
