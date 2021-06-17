@@ -6,8 +6,5 @@ test('getdiff', () => {
 
   const file2 = '../frontend-project-lvl2/__fixtures__/file2.json';
 
-  const result =
-   
-
-  expect(gendiff(file1, file2)).toEqual(result);
+  expect(gendiff(file1, file2)).toEqual('result');
 });
