@@ -16,5 +16,5 @@ test('getdiff', () => {
   
   const result = '{\n  - follow: false\n    host: hexlet.io\n  - proxy: 123.234.53.22\n  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}';
 
-  expect(gendiff('../frontend-project-lvl2/bin/file1.json', '../frontend-project-lvl2/bin/file2.json')).toEqual(result); 
+  expect(gendiff('../frontend-project-lvl2/__fixtures__/file1.json', '../frontend-project-lvl2/__fixtures__/file2.json')).toEqual(result); 
 });
