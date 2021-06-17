@@ -1,3 +1,4 @@
+import { test, expect } from '@jest/globals';
 import gendiff from '../src/main.js';
 
 test('getdiff', () => {
