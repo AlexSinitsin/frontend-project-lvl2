@@ -1,4 +1,3 @@
-import { test, expect } from 'jest';
 import gendiff from '../src/main.js';
 
 test('getdiff', () => {
