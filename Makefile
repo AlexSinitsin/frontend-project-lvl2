@@ -6,6 +6,9 @@ install-deps:
 test:
 	node --experimental-vm-modules node_modules/.bin/jest
 
+coverage:
+	node --experimental-vm-modules node_modules/.bin/jest --coverage
+
 edit:
 	npx prettier -w .
 
