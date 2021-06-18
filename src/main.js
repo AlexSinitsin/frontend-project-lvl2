@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const gendiff = (filepath1, filepath2) => {
   const path1 = path.resolve(filepath1);
-  console.log(path1 + '&')
+  console.log(path1 + '&');
   const path2 = path.resolve(filepath2);
   const file1 = fs.readFileSync(path1, 'utf8');
   const file2 = fs.readFileSync(path2, 'utf8');
@@ -30,7 +30,7 @@ const gendiff = (filepath1, filepath2) => {
     acc.push(`  + ${key}: ${json2[key]}`);
     return acc;
   }, []);
-  const result = `{\n${resultArr.join('\n')}\n}`;
+  const result = `{\r\n${resultArr.join('\r\n')}\r\n}`;
   console.log(result);
   return result;
 };
