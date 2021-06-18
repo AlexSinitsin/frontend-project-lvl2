@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 const gendiff = (filepath1, filepath2) => {
   const path1 = path.resolve(filepath1);
+  console.log(path1 + '&')
   const path2 = path.resolve(filepath2);
   const file1 = fs.readFileSync(path1, 'utf8');
   const file2 = fs.readFileSync(path2, 'utf8');
