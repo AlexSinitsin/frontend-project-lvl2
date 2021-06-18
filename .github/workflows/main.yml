@@ -1,16 +1,11 @@
 name: linter & test
 
 on:
- push:
+  push:
     branches:
-      - master
+      - '**'
     tags:
-      - '!*' # Do not execute on tags
-    paths:
-      - src/*
-      - test/*
-      - '*.json'
-      - yarn.lock
+      - '**'
 
 jobs:
   build:
