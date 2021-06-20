@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { Command, Option } from 'commander/esm.mjs';
+import { Command } from 'commander/esm.mjs';
 import gendiff from '../formatters/index.js';
 
 const program = new Command();
@@ -15,4 +15,3 @@ program
     console.log(result);
   })
   .parse();
-
