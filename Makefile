@@ -4,7 +4,7 @@ install-deps:
 	npm ci
 
 test:
-	node --experimental-vm-modules node_modules/.bin/jest --colors --runInBand --bail
+	node --experimental-vm-modules node_modules/.bin/jest
 
 coverage:
 	node --experimental-vm-modules node_modules/.bin/jest --coverage
