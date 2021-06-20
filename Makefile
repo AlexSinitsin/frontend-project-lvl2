@@ -17,3 +17,6 @@ lint:
 
 publish:
 	npm publish
+
+run:
+	node bin/gendiff.js __fixtures__/file3.json __fixtures__/file4.json
