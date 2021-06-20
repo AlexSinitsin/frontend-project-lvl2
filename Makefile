@@ -13,7 +13,7 @@ edit:
 	npx prettier -w .
 
 lint:
-	npx eslint .
+	npx eslint --format json .
 
 publish:
 	npm publish
