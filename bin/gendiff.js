@@ -16,6 +16,8 @@ program
   )
   .action((filepath1, filepath2, options) => {
     const param = options.format;
-    gendiff(filepath1, filepath2, param);
-  })
-  .parse();
+    const result = gendiff(filepath1, filepath2, param);
+    console.log(result);
+  });
+
+program.parse(process.argv);
