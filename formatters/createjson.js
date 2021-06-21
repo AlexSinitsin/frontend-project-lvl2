@@ -28,11 +28,8 @@ const createJson = (json1, json2) => {
       acc[key].preValue = _.isObject(inJson1[key])
         ? createJson(inJson1[key], inJson2[key])
         : inJson1[key];
-      if (!_.isObject(inJson2[key]) || !_.isObject(inJson2[key])) {
+      if (!_.isObject(inJson1[key]) || !_.isObject(inJson2[key])) {
         acc[key].state = inJson1[key] === inJson2[key] ? 'equal' : 'update';
-      }
-      if (_.isObject(inJson2[key]) && _.isObject(inJson2[key])) {
-        acc[key].state = 'equal';
       }
     }
     return acc;
