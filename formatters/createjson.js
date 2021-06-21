@@ -7,32 +7,33 @@ const createJson = (json1, json2) => {
   const arrFile2 = Object.keys(inJson2);
   const unionArr = _.union(arrFile1, arrFile2);
   const resultJson = unionArr.reduce((acc, key) => {
-    acc[key] = {};
+    const obj = _.clone(acc);
+    obj[key] = {};
     if (!arrFile1.includes(key)) {
-      acc[key].state = 'add';
-      acc[key].newValue = _.isObject(inJson2[key])
+      obj[key].state = 'add';
+      obj[key].newValue = _.isObject(inJson2[key])
         ? createJson(inJson1[key], inJson2[key])
         : inJson2[key];
     }
     if (!arrFile2.includes(key)) {
-      acc[key].state = 'remove';
-      acc[key].preValue = _.isObject(inJson1[key])
+      obj[key].state = 'remove';
+      obj[key].preValue = _.isObject(inJson1[key])
         ? createJson(inJson1[key], inJson2[key])
         : inJson1[key];
     }
     if (arrFile1.includes(key) && arrFile2.includes(key)) {
-      acc[key].state = 'equal';
-      acc[key].newValue = _.isObject(inJson2[key])
+      obj[key].state = 'equal';
+      obj[key].newValue = _.isObject(inJson2[key])
         ? createJson(inJson1[key], inJson2[key])
         : inJson2[key];
-      acc[key].preValue = _.isObject(inJson1[key])
+      obj[key].preValue = _.isObject(inJson1[key])
         ? createJson(inJson1[key], inJson2[key])
         : inJson1[key];
       if (!_.isObject(inJson1[key]) || !_.isObject(inJson2[key])) {
-        acc[key].state = inJson1[key] === inJson2[key] ? 'equal' : 'update';
+        obj[key].state = inJson1[key] === inJson2[key] ? 'equal' : 'update';
       }
     }
-    return acc;
+    return obj;
   }, {});
   return resultJson;
 };
