@@ -1,57 +1,44 @@
 import _ from 'lodash';
 
-const plain = (json1, json2, path = '') => {
-  const arrFile1 = Object.keys(json1);
-  const arrFile2 = Object.keys(json2);
-  const unionArr = _.union(arrFile1, arrFile2).sort();
-  const resultArr = unionArr.reduce((acc, key) => {
-    const before = !_.isString(json1[key]) ? json1[key] : `'${json1[key]}'`;
-    const after = !_.isString(json2[key]) ? json2[key] : `'${json2[key]}'`;
-    if (arrFile1.includes(key) && arrFile2.includes(key)) {
-      if (_.isObject(json1[key]) && !_.isObject(json2[key])) {
-        acc.push(
-          `Property '${path}${key}' was updated. From [complex value] to ${after}`,
-        );
-        return acc;
+const plain = (json, path = '') => {
+  const arr = Object.keys(json).sort();
+  const result = arr
+    .reduce((acc, key) => {
+      const isObjectBefore = _.isObject(json[key].preValue)
+        ? '[complex value]'
+        : json[key].preValue;
+      const before = !_.isString(isObjectBefore)
+        ? json[key].preValue
+        : `'${json[key].preValue}'`;
+      const isObjectAfter = _.isObject(json[key].newValue)
+        ? '[complex value]'
+        : json[key].newValue;
+      const after = !_.isString(isObjectAfter)
+        ? json[key].newValue
+        : `'${json[key].newValue}'`;
+      switch (json[key].state) {
+        case 'add':
+          acc.push(`Property '${path}${key}' was added with value: ${after}`);
+          return acc;
+        case 'remove':
+          acc.push(`Property '${path}${key}' was removed`);
+          return acc;
+        case 'update':
+          acc.push(
+            `Property '${path}${key}' was updated. From ${before} to ${after}`,
+          );
+          return acc;
+        case 'equal':
+          if (!_.isObject(json[key].newValue)) {
+            return acc;
+          }
+          acc.push(`${plain(json[key].newValue, `${path}${key}.`)}`);
+          return acc;
+        default:
+          return acc;
       }
-      if (!_.isObject(json1[key]) && _.isObject(json2[key])) {
-        acc.push(
-          `Property '${path}${key}' was updated. From ${before} to [complex value]`,
-        );
-        return acc;
-      }
-      if (_.isObject(json1[key]) && _.isObject(json2[key])) {
-        acc.push(`${plain(json1[key], json2[key], `${path}${key}.`)}`);
-        return acc;
-      }
-      if (json1[key] !== json2[key]) {
-        acc.push(
-          `Property '${path}${key}' was updated. From ${before} to ${after}`,
-        );
-        return acc;
-      }
-      if (json1[key] === json2[key]) {
-        return acc;
-      }
-    }
-    if (arrFile1.includes(key) && !arrFile2.includes(key)) {
-      if (_.isObject(json1[key])) {
-        acc.push(`Property '${path}${key}' was removed`);
-        return acc;
-      }
-      acc.push(`Property '${path}${key}' was removed`);
-      return acc;
-    }
-    if (_.isObject(json2[key])) {
-      acc.push(
-        `Property '${path}${key}' was added with value: [complex value]`,
-      );
-      return acc;
-    }
-    acc.push(`Property '${path}${key}' was added with value: ${after}`);
-    return acc;
-  }, []);
-  const result = `${resultArr.join('\r\n')}`;
+    }, [])
+    .join('\r\n');
   return result;
 };
 
