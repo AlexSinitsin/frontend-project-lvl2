@@ -7,7 +7,7 @@ const createJson = (json1, json2) => {
   const arrFile2 = Object.keys(inJson2);
   const unionArr = _.union(arrFile1, arrFile2);
   const resultJson = unionArr.reduce((acc, key) => {
-    const obj = _.clone(acc);
+    const obj = _.cloneDeep(acc);
     obj[key] = {};
     if (!arrFile1.includes(key)) {
       obj[key].state = 'add';
