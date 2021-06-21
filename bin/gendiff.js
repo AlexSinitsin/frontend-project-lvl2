@@ -15,6 +15,6 @@ program
     console.log(result);
   });
 
-program.parse();
+program.parse(process.argv);
 
 export default gendiff;
