@@ -7,47 +7,48 @@ const stylish = (json, indent = 0) => {
   }
   const arr = Object.keys(json).sort();
   const resultArr = arr.reduce((acc, key) => {
+    const seq = acc;
     switch (json[key].state) {
       case 'add':
-        acc.push(
+        seq.push(
           `${str.repeat(indent)}  + ${key}: ${stylish(
             json[key].newValue,
             indent + 1,
           )}`,
         );
-        return acc;
+        return seq;
       case 'remove':
-        acc.push(
+        seq.push(
           `${str.repeat(indent)}  - ${key}: ${stylish(
             json[key].preValue,
             indent + 1,
           )}`,
         );
-        return acc;
+        return seq;
       case 'equal':
-        acc.push(
+        seq.push(
           `${str.repeat(indent)}    ${key}: ${stylish(
             json[key].newValue,
             indent + 1,
           )}`,
         );
-        return acc;
+        return seq;
       case 'update':
-        acc.push(
+        seq.push(
           `${str.repeat(indent)}  - ${key}: ${stylish(
             json[key].preValue,
             indent + 1,
           )}`,
         );
-        acc.push(
+        seq.push(
           `${str.repeat(indent)}  + ${key}: ${stylish(
             json[key].newValue,
             indent + 1,
           )}`,
         );
-        return acc;
+        return seq;
       default:
-        return acc;
+        return seq;
     }
   }, []);
   const result = `{\n${resultArr.join('\n')}\n${str.repeat(indent)}}`;

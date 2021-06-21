@@ -4,6 +4,7 @@ const plain = (json, path = '') => {
   const arr = Object.keys(json).sort();
   const result = arr
     .reduce((acc, key) => {
+      const seq = _.clone(acc);
       const isObjectBefore = _.isObject(json[key].preValue)
         ? '[complex value]'
         : json[key].preValue;
@@ -18,24 +19,24 @@ const plain = (json, path = '') => {
         : `'${isObjectAfter}'`;
       switch (json[key].state) {
         case 'add':
-          acc.push(`Property '${path}${key}' was added with value: ${after}`);
-          return acc;
+          seq.push(`Property '${path}${key}' was added with value: ${after}`);
+          return seq;
         case 'remove':
-          acc.push(`Property '${path}${key}' was removed`);
-          return acc;
+          seq.push(`Property '${path}${key}' was removed`);
+          return seq;
         case 'update':
-          acc.push(
+          seq.push(
             `Property '${path}${key}' was updated. From ${before} to ${after}`,
           );
-          return acc;
+          return seq;
         case 'equal':
           if (!_.isObject(json[key].newValue)) {
-            return acc;
+            return seq;
           }
-          acc.push(`${plain(json[key].newValue, `${path}${key}.`)}`);
-          return acc;
+          seq.push(`${plain(json[key].newValue, `${path}${key}.`)}`);
+          return seq;
         default:
-          return acc;
+          return seq;
       }
     }, [])
     .join('\n');
