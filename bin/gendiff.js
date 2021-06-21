@@ -13,7 +13,8 @@ program
     const param = program.opts().format;
     const result = gendiff(filepath1, filepath2, param);
     console.log(result);
-  })
-  .parse();
+  });
+
+program.parse();
 
 export default gendiff;
