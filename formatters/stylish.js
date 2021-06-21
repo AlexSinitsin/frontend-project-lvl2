@@ -50,7 +50,7 @@ const stylish = (json, indent = 0) => {
         return acc;
     }
   }, []);
-  const result = `{\r\n${resultArr.join('\r\n')}\r\n${str.repeat(indent)}}`;
+  const result = `{\n${resultArr.join('\n')}\n${str.repeat(indent)}}`;
   return result;
 };
 

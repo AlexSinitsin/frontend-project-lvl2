@@ -38,7 +38,7 @@ const plain = (json, path = '') => {
           return acc;
       }
     }, [])
-    .join('\r\n');
+    .join('\n');
   return result;
 };
 
