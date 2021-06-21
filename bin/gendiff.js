@@ -15,3 +15,5 @@ program
     console.log(result);
   })
   .parse();
+
+export default gendiff;
