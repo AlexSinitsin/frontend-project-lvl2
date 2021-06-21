@@ -8,7 +8,6 @@ const gendiff = (filepath1, filepath2, format = 'stylish') => {
   const dataFile1 = parser(filepath1);
   const dataFile2 = parser(filepath2);
   const baseJson = createJson(dataFile1, dataFile2);
-  // console.log(JSON.stringify(baseJson, null, ' '));
   switch (format) {
     case 'stylish':
       return stylish(baseJson);
