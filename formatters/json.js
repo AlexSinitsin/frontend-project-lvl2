@@ -1,13 +1,16 @@
 import _ from 'lodash';
 
 const inJson = (json) => {
+  const setValue = (js, k) => {
+    const value = !_.isObject(js[k].newValue)
+      ? js[k].newValue
+      : inJson(js[k].newValue);
+    return value;
+  };
   const arr = Object.keys(json).sort();
   const result = arr.reduce((acc, key) => {
-    const obj = _.clone(acc);
-    obj[key] = !_.isObject(json[key].newValue)
-      ? json[key].newValue
-      : inJson(json[key].newValue);
-    return obj;
+    const obj = { ...{}, ...setValue(json, key) };
+    return { ...{}, ...acc, [key]: obj };
   }, {});
   return JSON.stringify(result);
 };
