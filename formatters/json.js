@@ -7,7 +7,7 @@ const inJson = (json) => {
       : inJson(js[k].newValue);
     return value;
   };
-  const arr = Object.keys(json).sort();
+  const arr = _.sortBy(Object.keys(json));
   const result = arr.reduce((acc, key) => {
     const obj = { ...{}, ...setValue(json, key) };
     return { ...{}, ...acc, [key]: obj };
