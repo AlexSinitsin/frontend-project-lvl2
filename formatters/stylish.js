@@ -2,34 +2,37 @@ import _ from 'lodash';
 
 const str = '    ';
 
+const values = {
+  add: ['newValue'],
+  remove: ['preValue'],
+  update: ['preValue', 'newValue'],
+  equal: ['newValue'],
+};
+
+const states = ['add', 'remove', 'update', 'equal'];
+
+const simbolsOfState = {
+  add: ['+'],
+  remove: ['-'],
+  equal: [' '],
+  update: ['-', '+'],
+};
+
 const conditon = (json, key, indent, fn) => {
-  switch (json[key].state) {
-    case 'add':
-      return `${str.repeat(indent)}  + ${key}: ${fn(
-        json[key].newValue,
-        indent + 1,
-      )}`;
-    case 'remove':
-      return `${str.repeat(indent)}  - ${key}: ${fn(
-        json[key].preValue,
-        indent + 1,
-      )}`;
-    case 'equal':
-      return `${str.repeat(indent)}    ${key}: ${fn(
-        json[key].newValue,
-        indent + 1,
-      )}`;
-    case 'update':
-      return `${str.repeat(indent)}  - ${key}: ${fn(
-        json[key].preValue,
-        indent + 1,
-      )}\n${str.repeat(indent)}  + ${key}: ${fn(
-        json[key].newValue,
-        indent + 1,
-      )}`;
-    default:
-  }
-  return 'err';
+  const res = states
+    .filter((state) => state === json[key].state)
+    .map((state) => {
+      const result = values[state]
+        .map((st, index) => {
+          const string = `${str.repeat(indent)}  ${
+            simbolsOfState[state][index]
+          } ${key}: ${fn(json[key][st], indent + 1)}`;
+          return string;
+        })
+        .join('\n');
+      return result;
+    })[0];
+  return res;
 };
 
 const stylish = (json, indent = 0) => {
