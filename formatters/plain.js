@@ -28,15 +28,17 @@ const conditon = (json, key, path, fn) => {
       break;
     default:
   }
-  return 'err';
+  return null;
 };
 
 const plain = (json, path = '') => {
   const arr = _.sortBy(Object.keys(json));
-  const result = arr
-    .reduce((acc, key) => [...acc, conditon(json, key, path, plain)], [])
-    .join('\n');
-  return result;
+  const result = arr.reduce(
+    (acc, key) => [...acc, conditon(json, key, path, plain)],
+    [],
+  );
+  const cleanResult = _.compact(result).join('\n');
+  return cleanResult;
 };
 
 export default plain;
